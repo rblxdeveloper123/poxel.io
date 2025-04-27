@@ -1,27 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poxel.io Proxy</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Poxel.io Proxy (Debug)</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    #log { 
+      white-space: pre-wrap; 
+      background: #f0f0f0; 
+      border: 1px solid #ccc; 
+      padding: 0.5rem; 
+      height: 30vh; 
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+    h1 { margin-top: 0; }
+  </style>
 </head>
 <body>
-    <h1>Welcome to Poxel.io Proxy</h1>
-    <script type="module">
-        import { UVClient } from './uv.client.js';
-        import { generateUVConfig } from './uv.config.js';
+  <h1>Poxel.io Proxy (Debug)</h1>
+  <div id="log">[Starting…]</div>
+  <script type="module">
+    const logEl = document.getElementById('log');
+    function log(msg) {
+      logEl.textContent += "\n" + msg;
+    }
 
-        const uv = new UVClient();
-        const config = generateUVConfig();
+    log("1. Page loaded.");
 
-        navigator.serviceWorker.register('/uv.sw.js', {
-          scope: './',
-        }).then(() => {
+    import { UVClient } from './uv.client.js';
+    import { generateUVConfig } from './uv.config.js';
+
+    let uv, config;
+    try {
+      uv = new UVClient();
+      log("2. UVClient instantiated.");
+      config = generateUVConfig();
+      log("3. Config generated: prefix=" + config.prefix);
+    } catch(e) {
+      log("⚠️ Error during init: " + e);
+    }
+
+    log("4. Registering service worker…");
+    navigator.serviceWorker.register('/uv.sw.js', { scope: './' })
+      .then(reg => {
+        log("✅ Service Worker registered. Scope: " + reg.scope);
+        try {
           const proxyUrl = __uv$config.encodeUrl("https://poxel.io/");
-          window.location.href = __uv$config.prefix + proxyUrl;
-        }).catch((error) => {
-          console.error('Error registering service worker:', error);
-        });
-    </script>
+          log("5. Redirecting to proxy URL: " + config.prefix + proxyUrl);
+          window.location.href = config.prefix + proxyUrl;
+        } catch(e) {
+          log("⚠️ Error building redirect URL: " + e);
+        }
+      })
+      .catch(err => {
+        log("❌ SW registration failed: " + err);
+      });
+  </script>
 </body>
 </html>
