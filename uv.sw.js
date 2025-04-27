@@ -1,9 +1,22 @@
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./uv.sw.js', {
-    scope: './',
-  }).then(function(registration) {
-    console.log('Service Worker registered with scope:', registration.scope);
-  }).catch(function(error) {
-    console.log('Service Worker registration failed:', error);
-  });
-}
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open('uv-cache').then(function(cache) {
+      return cache.addAll([
+        '/',
+        '/index.html',
+        '/register-sw.js',
+        '/uv.client.js',
+        '/uv.config.js',
+        '/uv.sw.js',
+      ]);
+    })
+  );
+});
+
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request).then(function(response) {
+      return response || fetch(event.request);
+    })
+  );
+});
