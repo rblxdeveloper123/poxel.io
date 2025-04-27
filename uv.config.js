@@ -1,4 +1,6 @@
-export const config = {
-  prefix: '/service/',
-  bare: '/bare/',
+window.__uv$config = {
+  prefix: '/p',
+  encodeUrl: function(url) {
+    return encodeURIComponent(url);
+  },
 };
