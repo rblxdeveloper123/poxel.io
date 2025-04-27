@@ -1,27 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poxel.io Proxy</title>
-</head>
-<body>
-    <h1>Welcome to Poxel.io Proxy</h1>
-    <script type="module">
-        import { UVClient } from './uv.client.js';
-        import { generateUVConfig } from './uv.config.js';
+<script type="module">
+  import { UVClient } from './uv.client.js';
+  import { generateUVConfig } from './uv.config.js';
 
-        const uv = new UVClient();
-        const config = generateUVConfig();
+  const uv = new UVClient();
+  const config = generateUVConfig();
 
-        navigator.serviceWorker.register('./register-sw.js', {
-          scope: __uv$config.prefix,
-        }).then(() => {
-          const proxyUrl = __uv$config.encodeUrl("https://poxel.io/");
-          window.location.href = __uv$config.prefix + proxyUrl;
-        }).catch((error) => {
-          console.error('Error registering service worker:', error);
-        });
-    </script>
-</body>
-</html>
+  navigator.serviceWorker.register('./register-sw.js', {
+    scope: __uv$config.prefix,
+  }).then(() => {
+    const proxyUrl = __uv$config.encodeUrl("https://poxel.io/");
+    window.location.href = __uv$config.prefix + proxyUrl;
+  }).catch((error) => {
+    console.error('Error registering service worker:', error);
+  });
+</script>
