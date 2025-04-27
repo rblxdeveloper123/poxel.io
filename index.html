@@ -2,11 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="2;url=https://poxel.io/">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redirecting to Poxel.io...</title>
+  <title>Loading Poxel.io...</title>
 </head>
 <body>
-  <h1>Redirecting to Poxel.io...</h1>
+  <script type="module">
+    import { createBareServer } from './uv/uv.bundle.js';
+
+    const bareServer = await createBareServer({
+      prefix: '/bare/',
+    });
+
+    const iframe = document.createElement('iframe');
+    iframe.style = 'position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;';
+    document.body.appendChild(iframe);
+
+    iframe.src = '/service/hvtrs8%2F-wuw%2Cqbkrp%60i%2Ccmm-';
+  </script>
 </body>
 </html>
