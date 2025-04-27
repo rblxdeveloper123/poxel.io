@@ -18,7 +18,9 @@
           scope: __uv$config.prefix,
         }).then(() => {
           const proxyUrl = __uv$config.encodeUrl("https://poxel.io/");
-          location.href = __uv$config.prefix + proxyUrl;
+          window.location.href = __uv$config.prefix + proxyUrl;
+        }).catch((error) => {
+          console.error('Error registering service worker:', error);
         });
     </script>
 </body>
