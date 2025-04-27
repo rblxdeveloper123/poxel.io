@@ -1,22 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Loading Poxel.io...</title>
-</head>
-<body>
-  <script type="module">
-    import { createBareServer } from './uv/uv.bundle.js';
+<script type="module">
+import { UVServiceWorker } from './uv/uv.sw.js';
+import { UVClient } from './uv/uv.client.js';
+import { generateUVConfig } from './uv.config.js';
 
-    const bareServer = await createBareServer({
-      prefix: '/bare/',
-    });
+const uv = new UVClient();
+const config = generateUVConfig();
 
-    const iframe = document.createElement('iframe');
-    iframe.style = 'position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;';
-    document.body.appendChild(iframe);
-
-    iframe.src = '/service/hvtrs8%2F-wuw%2Cqbkrp%60i%2Ccmm-';
-  </script>
-</body>
-</html>
+navigator.serviceWorker.register('./register-sw.js', {
+  scope: __uv$config.prefix,
+}).then(() => {
+  const proxyUrl = __uv$config.encodeUrl("https://poxel.io/");
+  location.href = __uv$config.prefix + proxyUrl;
+});
+</script>
