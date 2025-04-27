@@ -16,10 +16,13 @@
         const uv = new UVClient();
         const config = generateUVConfig();
 
+        // Registering the service worker and attempting redirect
         navigator.serviceWorker.register('/uv.sw.js', {
             scope: './',
         }).then(() => {
+            console.log('Service Worker Registered');
             const proxyUrl = __uv$config.encodeUrl("https://poxel.io/");
+            console.log('Redirecting to: ', __uv$config.prefix + proxyUrl);
             window.location.href = __uv$config.prefix + proxyUrl;
         }).catch((error) => {
             console.error('Error registering service worker:', error);
