@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poxel.io Proxy</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Poxel.io Proxy</title>
+  <script src="./register-sw.js"></script>
 </head>
 <body>
-    <h1>Welcome to Poxel.io Proxy</h1>
-    <script>
-        console.log("Page Loaded!");  <!-- This will print to the console -->
+  <h1>Redirecting to Poxel.io...</h1>
 
-        // Try using window.location.replace() for redirection
-        window.location.replace("https://poxel.io/");
-    </script>
+  <script type="module">
+    import { UVServiceWorker } from './uv/uv.sw.js';
+    import { UVClient } from './uv/uv.client.js';
+    import { __uv$config } from './uv/uv.config.js';
+
+    window.addEventListener('load', () => {
+      const client = new UVClient();
+      client.navigate(__uv$config.prefix + __uv$config.encodeUrl('https://poxel.io'));
+    });
+  </script>
 </body>
 </html>
