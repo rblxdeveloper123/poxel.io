@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Poxel.io Proxy</title>
-  <script src="./register-sw.js" defer></script>
+  <script src="./register-sw.js"></script>
 </head>
 <body>
-  <h1>Loading Poxel.io...</h1>
+  <h1>Redirecting to Poxel.io...</h1>
 
   <script type="module">
+    import { UVServiceWorker } from './uv/uv.sw.js';
     import { UVClient } from './uv/uv.client.js';
     import { __uv$config } from './uv/uv.config.js';
 
