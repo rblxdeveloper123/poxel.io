@@ -2,21 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Poxel.io Proxy</title>
-  <script src="./register-sw.js"></script>
+  <title>Proxy Launcher 🚀</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0d0d0d;
+      color: #00ffcc;
+      text-align: center;
+      padding-top: 50px;
+    }
+    h1 {
+      font-size: 3em;
+    }
+    button {
+      margin: 10px;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      background: #00ffcc;
+      color: #0d0d0d;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #00ccb3;
+    }
+  </style>
 </head>
 <body>
-  <h1>Redirecting to Poxel.io...</h1>
+  <h1>Proxy Launcher 🚀</h1>
+  <p>Click a button to open a proxy!</p>
 
-  <script type="module">
-    import { UVServiceWorker } from './uv/uv.sw.js';
-    import { UVClient } from './uv/uv.client.js';
-    import { __uv$config } from './uv/uv.config.js';
+  <div id="buttons"></div>
 
-    window.addEventListener('load', () => {
-      const client = new UVClient();
-      client.navigate(__uv$config.prefix + __uv$config.encodeUrl('https://poxel.io'));
+  <script>
+    const proxies = [
+      { name: "Holy Unblocker", url: "https://holyubofficial.net/" },
+      { name: "Incognito Proxy", url: "https://incognitoproxy.net/" },
+      { name: "Interstellar", url: "https://interstellars.site/" },
+      { name: "Nebula Proxy", url: "https://nebula.uno/" },
+      { name: "Astro Proxy", url: "https://astroproxy.online/" },
+      { name: "Titan Browser", url: "https://titantools.net/tools/browser" }
+    ];
+
+    const buttonContainer = document.getElementById('buttons');
+
+    proxies.forEach(proxy => {
+      const btn = document.createElement('button');
+      btn.innerText = proxy.name;
+      btn.onclick = () => window.open(proxy.url, '_blank');
+      buttonContainer.appendChild(btn);
     });
   </script>
+
 </body>
 </html>
